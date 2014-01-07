@@ -7,7 +7,7 @@ function SongPart(fileArray){
 
 	this.backingTrack = new Track("choir_strings_backing.wav",this);
 	this.backingTrack.gainnode.connect(masterGain);
-	this.backingTrack.gainnode.gain.setValueAtTime(0.3,acontext.currentTime);
+	this.backingTrack.gainnode.gain.setValueAtTime(0.25,acontext.currentTime);
 
 	//Not used right now, when we have more SongParts these might come in useful
 	this.startTime;

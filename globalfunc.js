@@ -10,17 +10,25 @@ function parseLeapData(frame,hand){
 		if (realY >= 40 && realY <= 600){
 			realY -= 40;
 			realY /= 600;
-			console.log("Palm position: "+palmPosY);
 		}
 		else realY = 1;
 
-		console.log("realY:"+realY);
+		var realX = palmPosX;
+		realX += 400;
+		if (realX >= 0 && realX <= 800){
+			realX /= 800;
+			console.log("Pos X: "+realX);
+		}
+		else if(realX > 800) realX = 1;
+		else if(realX <= 0) realX = 0;
+
+		//console.log("realY:"+realY);
 
 		console.log("Original Leap Positions: "+palmPosX.toFixed(3)+"|"+palmPosY.toFixed(3)+"|"+palmPosZ.toFixed(3));
 		var interactionBox = new Leap.InteractionBox(frame.interactionBox);
 		var normalizedPositions = interactionBox.normalizePoint(hand.palmPosition,true);
 		console.log("Parsed Leap Positions: "+normalizedPositions[0].toFixed(3)+"|"+normalizedPositions[1].toFixed(3)+"|"+normalizedPositions[2].toFixed(3));
 
-		var myPositions = [normalizedPositions[0],realY-0.02,normalizedPositions[2]];
+		var myPositions = [realX,realY,normalizedPositions[2]];
 		return myPositions;
 }
