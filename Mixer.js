@@ -1,5 +1,8 @@
 function Mixer(items,parent){
 
+	this.distance = 1 / (files.length-1);
+	console.log("distance between each track is "+this.distance);
+
 	this.items = items;
 	this.parent = parent;
 

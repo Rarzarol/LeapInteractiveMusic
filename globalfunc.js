@@ -8,5 +8,6 @@ function parseLeapData(leapposX,leapposY){
 		console.log("Palm position: "+leapposY);
 		return leapposY;
 	}
+	//check pos x and z
 	else return -1;
 }

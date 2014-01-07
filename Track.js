@@ -1,15 +1,13 @@
-function Track(file,parent,mixPosition){
+function Track(file,parent){
 	this.parent   = parent;
 	this.file     = file;
+	//Audio Stuff
 	this.gainnode = acontext.createGain();
 	this.panner	  = acontext.createPanner();
 	this.panner.panningModel = this.panner.EQUALPOWER;
 	this.panner.setPosition(0, 0, 0);
 	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
 	this.length;
-	//Y mixPosition
-	this.mixPosition = mixPosition;
-
 
 	//Panner takes arguments in degrees. -90 to 90 degrees for total left/right panning.
 	this.pan = function(range){

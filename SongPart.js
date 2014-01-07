@@ -2,15 +2,16 @@ function SongPart(trackArray){
 	this.trackStacks = new Array();
 	this.filecounter = 0;
 	this.trackstacks = trackArray.length;
-	this.mixer = new Mixer();
-
-
-	this.parseTrackArray = function(){
-
-	}
+	this.mixer;
+	
+	//Not used right now, when we have more SongParts these might come in useful
+	this.startTime;
+	this.endTime;
 
 	this.createTrackStacks = function(){
-
+		for (var i = 0; i <= files.length - 1; i++){
+			trackStacks.push(new TrackStack(trackArray[i]),this);
+		};
 	}
 
 	this.trackStackLoaded = function(){
@@ -19,17 +20,15 @@ function SongPart(trackArray){
 		if (this.filecounter == this.trackstacks.length){
 			//Safe buffer, every track is started 1 second from now
 			var starttime = acontext.getCurrentTime + 1;
-			this.tracks.forEach(function(track){
-				//Set TrackStack length to longest track length
-				if(this.length == null) { this.length = track.length; }
-				else if(this.length <= track.length) { this.length = track.length }
-				track.startTrack(starttime);
+			this.trackStacks.forEach(function(trackStack){
+				trackStack.startTrackStack(starttime);
 			});
-		this.mixer.placeStacksOnAxis();
+		this.mixer.placeItemsOnAxis();
 		}
 	}
 
-
-
+	//Constructor contd.
+	this.createTrackStacks();
+	this.mixer = new Mixer(trackStacks,this);
 
 }
