@@ -1,4 +1,4 @@
-function Track(file,parent,position){
+function Track(file,parent,mixPosition){
 	this.parent   = parent;
 	this.file     = file;
 	this.gainnode = acontext.createGain();
@@ -7,9 +7,8 @@ function Track(file,parent,position){
 	this.panner.setPosition(0, 0, 0);
 	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
 	this.length;
-	//horizontal/vertical position. lower number left/bottom, higher number right/top.
-	//float between 0 and 1.
-	this.position = position;
+	//Y mixPosition
+	this.mixPosition = mixPosition;
 
 
 	//Panner takes arguments in degrees. -90 to 90 degrees for total left/right panning.
