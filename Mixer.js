@@ -1,6 +1,6 @@
 function Mixer(items,parent){
 
-	this.distance = 1 / (files.length-1);
+	this.distance = 1 / (items.length-1);
 	console.log("distance between each track is "+this.distance);
 
 	this.items = items;
@@ -15,7 +15,7 @@ function Mixer(items,parent){
 	this.lastBelowitem;
 
 	//Places the items on an axis, evenly distributed, bottom/left to top/right
-	this.placeitemsOnAxis = function(){
+	this.placeItemsOnAxis = function(){
 		var currentpos = 0;
 		for (var i = 0 ; i <= this.items.length - 1; i++){
 			console.log("item id "+i+" has mixPosition: "+currentpos);

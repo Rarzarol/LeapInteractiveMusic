@@ -1,16 +1,17 @@
-function SongPart(trackArray){
+function SongPart(fileArray){
+	this.fileArray = fileArray;
 	this.trackStacks = new Array();
 	this.filecounter = 0;
-	this.trackstacks = trackArray.length;
-	this.mixer;
 	
+	this.mixer;
+
 	//Not used right now, when we have more SongParts these might come in useful
 	this.startTime;
 	this.endTime;
 
 	this.createTrackStacks = function(){
-		for (var i = 0; i <= files.length - 1; i++){
-			trackStacks.push(new TrackStack(trackArray[i]),this);
+		for (var i = 0; i <= this.fileArray.length - 1; i++){
+			this.trackStacks.push(new TrackStack(this.fileArray[i]),this);
 		};
 	}
 
@@ -27,8 +28,12 @@ function SongPart(trackArray){
 		}
 	}
 
+	this.mixTrackStacks = function(x,y,z){
+
+	}
+
 	//Constructor contd.
 	this.createTrackStacks();
-	this.mixer = new Mixer(trackStacks,this);
+	this.mixer = new Mixer(this.trackStacks,this);
 
 }

@@ -2,16 +2,14 @@
 function TrackStack(files, parent){
 	this.files 		 = files;
 	this.parent 	 = parent;
-	//x mixPosition
-	this.mixPosition = mixPosition;
 	this.filecounter = 0;
 	this.tracks      = new Array();
 
 	this.length = null; // longest track duration in seconds
 
-	this.mixer = new Mixer();
+	this.mixer;
 
-	this.loadTracks = function(){
+	this.createTracks = function(){
 		//loads all associated tracks from disk, starts loading process
 		for (var i = 0; i <= files.length - 1; i++){
 			var track = new Track(files[i],this,0);
@@ -23,7 +21,7 @@ function TrackStack(files, parent){
 		this.filecounter += 1;
 		//for each track, start it! Because everything's loaded now, duh.
 		if (this.filecounter == this.files.length){
-			this.mixer.placeTracksOnAxis();
+			this.mixer.placeItemsOnAxis();
 		}
 	}
 
@@ -33,7 +31,12 @@ function TrackStack(files, parent){
 		});
 	}
 
-	//Constructor continued... now that function loadTracks() is known
-	if(this.files.length > 0) { this.loadTracks() };
+	this.mixTracks = function(x,y,z){
+		
+	}
+
+	//Constructor continued
+	this.createTracks();
+	this.mixer = new Mixer(this.tracks,this);
 	
 }

@@ -34,14 +34,8 @@ setInterval(function(){
 	//Always use first hand
 	if (frame.hands.length > 0){
 		var hand = frame.hands[0];
-		palmPosY = hand.palmPosition[1];
-		palmPosX = hand.palmPosition[0];
-		//Debug output
-		console.log("Ypos: "+palmPosY+ "Xpos: "+palmPosX);
-		var value = parseLeapData(palmPosX,palmPosY);
-		if (value != -1){
-			song1.mixTracks(value);
-		}
+		var parsedPosition = parseLeapData(frame,hand);
+		song1.mixTrackStacks(parsedPosition[0],parsedPosition[1],parsedPosition[2]);
 	}
 }, 50);
 });
