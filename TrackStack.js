@@ -4,6 +4,10 @@ function TrackStack(files, parent){
 	this.parent 	 = parent;
 	this.filecounter = 0;
 	this.tracks      = new Array();
+	this.mixPosition = 0;
+	this.gainnode 	 = acontext.createGain();
+	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
+	this.gainnode.connect(masterGain);
 
 	this.length = null; // longest track duration in seconds
 
@@ -12,8 +16,10 @@ function TrackStack(files, parent){
 	this.createTracks = function(){
 		//loads all associated tracks from disk, starts loading process
 		for (var i = 0; i <= files.length - 1; i++){
-			var track = new Track(files[i],this,0);
+			var track = new Track(files[i],this);
+		    track.gainnode.connect(this.gainnode);
 		    this.tracks.push(track);
+
 		};
 	}
 
@@ -21,7 +27,7 @@ function TrackStack(files, parent){
 		this.filecounter += 1;
 		//for each track, start it! Because everything's loaded now, duh.
 		if (this.filecounter == this.files.length){
-			this.mixer.placeItemsOnAxis();
+			this.parent.trackStackLoaded();
 		}
 	}
 
@@ -31,8 +37,12 @@ function TrackStack(files, parent){
 		});
 	}
 
-	this.mixTracks = function(x,y,z){
-		
+	this.setVolume = function(time,value){
+		this.gainnode.gain.setValueAtTime(value,time);
+	}
+
+	this.fadeOut = function(){
+		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+0.2);
 	}
 
 	//Constructor continued

@@ -42,7 +42,7 @@ setInterval(function(){
 
 var numinput = document.getElementById("numinput");
 numinput.onchange = function changeHandler() {
-    song1.mixTracks(this.value);
+    song1.mixTracks(this.value,0,0);
 };
 
 //Fast polling, more taxing on CPU

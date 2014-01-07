@@ -1,6 +1,7 @@
 function Track(file,parent){
 	this.parent   = parent;
 	this.file     = file;
+	this.mixPosition = 0;
 	//Audio Stuff
 	this.gainnode = acontext.createGain();
 	this.panner	  = acontext.createPanner();
@@ -36,8 +37,6 @@ function Track(file,parent){
 		this.source.connect(this.panner);
 		this.length = this.source.buffer.duration;
 		this.panner.connect(this.gainnode);
-		//TODO: set volume via function
-		this.gainnode.connect(masterGain);
 		parent.trackIsLoaded();
 	}
 

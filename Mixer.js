@@ -30,12 +30,12 @@ function Mixer(items,parent){
 	//Breaks it down into relative value between 0 and 1 depending on position between 2 Items.
 	this.mixItems = function(value){
 		//Do something with the Items Array, mix according to value 0-1
-		console.log("_____________________________________________________");
-		console.log("Value: "+value);
+/*		console.log("_____________________________________________________");
+		console.log("Value: "+value);*/
 		//check between which Items the hand is positioned, first calculate Item above, then below is given
 		for (var i = 0 ; i <= this.items.length - 1; i++){
 			if(value - this.items[i].mixPosition < 0){
-				console.log("Value is between Items "+ Number(i - 1)+ " and " + Number(i));
+/*				console.log("Value is between Items "+ Number(i - 1)+ " and " + Number(i));*/
 				this.aboveItem = this.items[i];
 				this.belowItem = this.items[i-1];
 				break;
@@ -69,7 +69,7 @@ function Mixer(items,parent){
 			}
 			//Turn both Items down, because hand is between two different Items
 			else {
-				console.log("Dismiss aboveItem and belowItem because value is between two different ones");
+				/*console.log("Dismiss aboveItem and belowItem because value is between two different ones");*/
 				this.lastBelowItem.fadeOut();
 				this.lastAboveItem.fadeOut();
 				this.lastBelowItem = this.belowItem;
@@ -81,14 +81,14 @@ function Mixer(items,parent){
 		}
 
 		//Calculate percentage: 0 -> value on belowItem 1 -> value on aboveItem
-		var relvalue = (value - this.belowItem.mixPosition)*(files.length - 1);
-		console.log("relative distance between 2 current Items: " + relvalue);
+		var relvalue = (value - this.belowItem.mixPosition)*(this.items.length - 1);
+/*		console.log("relative distance between 2 current Items: " + relvalue);*/
 
 		//Set volume accordingly
-		console.log("setting aboveItem to " + Number(relvalue));
+/*		console.log("setting aboveItem to " + Number(relvalue));*/
 		this.aboveItem.setVolume(acontext.currentTime,relvalue);
-		console.log("setting belowItem to " + Number(1-relvalue));
+/*		console.log("setting belowItem to " + Number(1-relvalue));*/
 		this.belowItem.setVolume(acontext.currentTime,1-relvalue);
 	}
-
+	this.placeItemsOnAxis();
 }
