@@ -37,7 +37,9 @@ function Track(file,parent){
 		this.source.connect(this.panner);
 		this.length = this.source.buffer.duration;
 		this.panner.connect(this.gainnode);
-		parent.trackIsLoaded();
+		if (parent != null) {
+			this.parent.trackIsLoaded();
+		}
 	}
 
 	//Accessed externally

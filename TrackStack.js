@@ -19,7 +19,6 @@ function TrackStack(files, parent){
 			var track = new Track(files[i],this);
 		    track.gainnode.connect(this.gainnode);
 		    this.tracks.push(track);
-
 		};
 	}
 
@@ -35,6 +34,7 @@ function TrackStack(files, parent){
 		this.tracks.forEach(function(track){
 			track.startTrack(time);
 		});
+
 	}
 
 	this.setVolume = function(time,value){

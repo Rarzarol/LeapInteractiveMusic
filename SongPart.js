@@ -5,6 +5,10 @@ function SongPart(fileArray){
 	this.mixPosition = 0;
 	this.mixer;
 
+	this.backingTrack = new Track("choir_strings_backing.wav",this);
+	this.backingTrack.gainnode.connect(masterGain);
+	this.backingTrack.gainnode.gain.setValueAtTime(0.3,acontext.currentTime);
+
 	//Not used right now, when we have more SongParts these might come in useful
 	this.startTime;
 	this.endTime;
@@ -25,6 +29,7 @@ function SongPart(fileArray){
 				trackStack.startTrackStack(starttime);
 			});
 		}
+		this.backingTrack.startTrack(starttime);
 	}
 
 	this.mixTrackStacks = function(x,y,z){
