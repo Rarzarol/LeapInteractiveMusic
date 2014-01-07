@@ -1,4 +1,4 @@
-function PartTrack(file,parent,position){
+function Track(file,parent,position){
 	this.parent   = parent;
 	this.file     = file;
 	this.gainnode = acontext.createGain();

@@ -1,12 +1,12 @@
 //Warning: No support for irregular intervals between tracks yet
-function SongPart(files){
+function TrackStack(files){
 	this.files 		  = files;
 	this.readycounter = 0;
-	this.partTracks   = new Array();
+	this.tracks   = new Array();
 	this.velocity 	  = 0.5;
 	this.startTime;
 	this.endTime;
-	this.length = null; // longest PartTrack duration in seconds
+	this.length = null; // longest track duration in seconds
 	this.distance = 1 / (files.length-1);
 	console.log("distance between each track is "+this.distance);
 
@@ -23,15 +23,15 @@ function SongPart(files){
 	//Expects value between 0 and 1 (absolute hand position).
 	//Breaks it down into relative value between 0 and 1 depending on position between 2 tracks.
 	this.mixTracks = function(value){
-		//Do something with the partTracks Array, mix according to value 0-1
+		//Do something with the tracks Array, mix according to value 0-1
 		console.log("_____________________________________________________");
 		console.log("Value: "+value);
 		//check between which tracks the hand is positioned, first calculate Track above, then below is given
-		for (var i = 0 ; i <= this.partTracks.length - 1; i++){
-			if(value - this.partTracks[i].position < 0){
+		for (var i = 0 ; i <= this.tracks.length - 1; i++){
+			if(value - this.tracks[i].position < 0){
 				console.log("Value is between Tracks "+ Number(i - 1)+ " and " + Number(i));
-				this.aboveTrack = this.partTracks[i];
-				this.belowTrack = this.partTracks[i-1];
+				this.aboveTrack = this.tracks[i];
+				this.belowTrack = this.tracks[i-1];
 				break;
 			}
 		}
@@ -88,9 +88,9 @@ function SongPart(files){
 	//Places the tracks on an axis, evenly distributed, bottom/left to top/right
 	this.placeTracksOnAxis = function(){
 		var currentpos = 0;
-		for (var i = 0 ; i <= this.partTracks.length - 1; i++){
+		for (var i = 0 ; i <= this.tracks.length - 1; i++){
 			console.log("Track id "+i+" has position: "+currentpos);
-			this.partTracks[i].position = currentpos;
+			this.tracks[i].position = currentpos;
 			currentpos += this.distance;
 		};
 	}
@@ -98,22 +98,22 @@ function SongPart(files){
 	this.loadTracks = function(){
 		//loads all associated tracks from disk, starts loading process
 		for (var i = 0; i <= files.length - 1; i++){
-			var partTrack = new PartTrack(files[i],this,0);
-		    this.partTracks.push(partTrack);
+			var track = new track(files[i],this,0);
+		    this.tracks.push(track);
 		};
 	}
 
 	this.trackIsLoaded = function(){
 		this.readycounter += 1;
-		//for each partTrack, start it! Because everything's loaded now, duh.
+		//for each track, start it! Because everything's loaded now, duh.
 		if (this.readycounter == this.files.length){
 			//Safe buffer, every track is started 1 second from now
 			var starttime = acontext.getCurrentTime + 1;
-			this.partTracks.forEach(function(partTrack){
-				//Set SongPart length to longest PartTrack length
-				if(this.length == null) { this.length = partTrack.length; }
-				else if(this.length <= partTrack.length) { this.length = partTrack.length }
-				partTrack.startTrack(starttime);
+			this.tracks.forEach(function(track){
+				//Set TrackStack length to longest track length
+				if(this.length == null) { this.length = track.length; }
+				else if(this.length <= track.length) { this.length = track.length }
+				track.startTrack(starttime);
 			});
 		this.placeTracksOnAxis();
 		}
