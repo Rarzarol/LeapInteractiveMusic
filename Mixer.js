@@ -1,3 +1,4 @@
+//Mixer class
 function Mixer(items,parent){
 
 	this.distance = 1 / (items.length-1);
