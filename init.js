@@ -3,7 +3,13 @@
 //Audio Init
 var acontext = new window.webkitAudioContext();
 var masterGain = acontext.createGain();
+var premixBus = acontext.createGain();
+var fxBus	= acontext.createGain();
+fxBus.gain.setValueAtTime(1,acontext.currentTime);
+premixBus.connect(masterGain);
+
 masterGain.connect(acontext.destination);
+fxBus.connect(acontext.destination);
 
 //Canvas Init
 var canvas = document.getElementById( 'canvas' );

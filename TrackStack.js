@@ -1,4 +1,3 @@
-//Warning: No support for irregular intervals between tracks yet
 function TrackStack(files, parent){
 	this.files 		 = files;
 	this.parent 	 = parent;
@@ -7,7 +6,7 @@ function TrackStack(files, parent){
 	this.mixPosition = 0;
 	this.gainnode 	 = acontext.createGain();
 	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
-	this.gainnode.connect(masterGain);
+	this.gainnode.connect(premixBus);
 
 	this.length = null; // longest track duration in seconds
 

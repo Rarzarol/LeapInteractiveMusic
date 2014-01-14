@@ -9,6 +9,7 @@ function Track(file,parent){
 	this.panner.setPosition(0, 0, 0);
 	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
 	this.length;
+	this.source;
 
 	//Panner takes arguments in degrees. -90 to 90 degrees for total left/right panning.
 	this.pan = function(range){

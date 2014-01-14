@@ -4,9 +4,12 @@ function SongPart(fileArray){
 	this.filecounter = 0;
 	this.mixPosition = 0;
 	this.mixer;
+	//Still hardcoded reverb
+	this.reverb = new Reverb("rev_saintsilvain.wav");
 
+	//Backing Track init
 	this.backingTrack = new Track("choir_strings_backing.wav",this);
-	this.backingTrack.gainnode.connect(masterGain);
+	this.backingTrack.gainnode.connect(premixBus);
 	this.backingTrack.gainnode.gain.setValueAtTime(0.2,acontext.currentTime);
 
 	//Not used right now, when we have more SongParts these might come in useful
@@ -29,6 +32,7 @@ function SongPart(fileArray){
 				trackStack.startTrackStack(starttime);
 			});
 		}
+		//Backing track - not affeced by anything
 		this.backingTrack.startTrack(starttime);
 	}
 
@@ -37,6 +41,8 @@ function SongPart(fileArray){
 		for (var i = 0; i <= this.trackStacks.length - 1; i++){
 			this.trackStacks[i].mixer.mixItems(y);
 		}
+		//STUB: Reverb mixing, still hardcoded
+		fxBus.gain.setValueAtTime(z,acontext.currentTime);
 	}
 
 	//Constructor contd.
