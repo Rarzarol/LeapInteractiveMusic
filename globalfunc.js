@@ -35,9 +35,7 @@ function parseLeapData(frame,hand){
 		//console.log("realY:"+realY);
 
 		console.log("Original Leap Positions: "+palmPosX.toFixed(3)+"|"+palmPosY.toFixed(3)+"|"+palmPosZ.toFixed(3));
-		var interactionBox = new Leap.InteractionBox(frame.interactionBox);
-		var normalizedPositions = interactionBox.normalizePoint(hand.palmPosition,true);
-		console.log("Parsed Leap Positions: "+normalizedPositions[0].toFixed(3)+"|"+normalizedPositions[1].toFixed(3)+"|"+normalizedPositions[2].toFixed(3));
+		console.log("Parsed Leap Positions: "+realX.toFixed(3)+"|"+realY.toFixed(3)+"|"+realZ.toFixed(3));
 
 		var myPositions = [realX,realY,realZ];
 		return myPositions;

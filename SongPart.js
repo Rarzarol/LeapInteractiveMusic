@@ -43,6 +43,7 @@ function SongPart(fileArray){
 		}
 		//STUB: Reverb mixing, still hardcoded
 		fxBus.gain.setValueAtTime(z,acontext.currentTime);
+		masterGain.gain.setValueAtTime(1-z,acontext.currentTime);
 	}
 
 	//Constructor contd.
