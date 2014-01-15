@@ -19,7 +19,7 @@ function Track(file,parent){
 	}
 
 	this.setVolume = function(time,value){
-		this.gainnode.gain.setValueAtTime(value,time);
+		this.gainnode.gain.setTargetAtTime(value,time,0.2);
 	}
 
 	this.fadeOut = function(){

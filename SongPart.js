@@ -8,9 +8,9 @@ function SongPart(fileArray){
 	this.reverb = new Reverb("rev_saintsilvain.wav");
 
 	//Backing Track init
-	this.backingTrack = new Track("choir_strings_backing.wav",this);
+/*	this.backingTrack = new Track("choir_strings_backing.wav",this);
 	this.backingTrack.gainnode.connect(premixBus);
-	this.backingTrack.gainnode.gain.setValueAtTime(0.2,acontext.currentTime);
+	this.backingTrack.gainnode.gain.setValueAtTime(0.2,acontext.currentTime);*/
 
 	//Not used right now, when we have more SongParts these might come in useful
 	this.startTime;
@@ -33,7 +33,7 @@ function SongPart(fileArray){
 			});
 		}
 		//Backing track - not affeced by anything
-		this.backingTrack.startTrack(starttime);
+		//this.backingTrack.startTrack(starttime);
 	}
 
 	this.mixTrackStacks = function(x,y,z){
