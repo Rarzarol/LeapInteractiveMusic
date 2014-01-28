@@ -7,9 +7,7 @@ function TrackStack(files, parent){
 	this.gainnode 	 = acontext.createGain();
 	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
 	this.gainnode.connect(premixBus);
-
-	this.length = null; // longest track duration in seconds
-
+	this.maxFileLength = 0;
 	this.mixer;
 
 	this.createTracks = function(){
@@ -21,11 +19,12 @@ function TrackStack(files, parent){
 		};
 	}
 
-	this.trackIsLoaded = function(){
+	this.trackIsLoaded = function(length){
 		this.filecounter += 1;
+		if(this.maxFileLength < length){ this.maxFileLength = length; };
 		//for each track, start it! Because everything's loaded now, duh.
 		if (this.filecounter == this.files.length){
-			this.parent.trackStackLoaded();
+			this.parent.trackStackLoaded(this.maxFileLength);
 		}
 	}
 

@@ -1,18 +1,21 @@
-function SongPart(fileArray){
-	this.fileArray = fileArray;
+function SongPart(partFileArray,parent,siblings){
+	this.siblings = siblings;
+	this.parent = parent;
+	this.loaded = false;
+
+	this.fileArray = partFileArray;
 	this.trackStacks = new Array();
 	this.filecounter = 0;
 	this.mixPosition = 0;
 	this.mixer;
-	//Still hardcoded reverb
-	this.reverb = new Reverb("rev_saintsilvain.wav");
 
 	//Backing Track init
-/*	this.backingTrack = new Track("choir_strings_backing.wav",this);
+	/*this.backingTrack = new Track("choir_strings_backing.wav",this);
 	this.backingTrack.gainnode.connect(premixBus);
 	this.backingTrack.gainnode.gain.setValueAtTime(0.2,acontext.currentTime);*/
 
-	//Not used right now, when we have more SongParts these might come in useful
+	this.maxPartLength = 0;
+	//When does this particular SongPart start and end?
 	this.startTime;
 	this.endTime;
 
@@ -22,18 +25,19 @@ function SongPart(fileArray){
 		};
 	}
 
-	this.trackStackLoaded = function(){
+	this.trackStackLoaded = function(length){
 		this.filecounter += 1;
-		//for each track, start it! Because everything's loaded now, duh.
+		if(this.maxPartLength < length){ this.maxPartLength = length; };
 		if (this.filecounter == this.trackStacks.length){
-			//Safe buffer, every track is started 1 second from now
-			var starttime = acontext.getCurrentTime + 1;
-			this.trackStacks.forEach(function(trackStack){
-				trackStack.startTrackStack(starttime);
-			});
+			this.loaded = true;
 		}
-		//Backing track - not affeced by anything
-		//this.backingTrack.startTrack(starttime);
+	}
+
+	this.startSongPart = function(time){
+		this.trackStacks.forEach(function(trackStack){
+			trackStack.startTrackStack(time);
+		});
+		/*this.backingTrack.startTrack(time);*/
 	}
 
 	this.mixTrackStacks = function(x,y,z){

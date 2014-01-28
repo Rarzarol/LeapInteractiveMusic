@@ -30,6 +30,7 @@ var controller = new Leap.Controller();
 //Global position data
 var palmPosX;
 var palmPosY;
+var parsedPosition;
 
 //Slow polling to save CPU cycles
 controller.on('connect', function(){
@@ -40,8 +41,8 @@ setInterval(function(){
 	//Always use first hand
 	if (frame.hands.length > 0){
 		var hand = frame.hands[0];
-		var parsedPosition = parseLeapData(frame,hand);
-		song1.mixTrackStacks(parsedPosition[0],parsedPosition[1],parsedPosition[2]);
+		parsedPosition = parseLeapData(frame,hand);
+		song0.mix(parsedPosition[0],parsedPosition[1],parsedPosition[2]);
 	}
 }, 50);
 });

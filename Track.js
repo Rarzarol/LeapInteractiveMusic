@@ -34,12 +34,12 @@ function Track(file,parent){
 	this.finishedLoading = function(bufferlist){
 		this.source = acontext.createBufferSource();
 		this.source.buffer = bufferlist[0];
-		this.source.loop = true;
+		this.source.loop = false;
 		this.source.connect(this.panner);
 		this.length = this.source.buffer.duration;
 		this.panner.connect(this.gainnode);
 		if (parent != null) {
-			this.parent.trackIsLoaded();
+			this.parent.trackIsLoaded(this.length);
 		}
 	}
 

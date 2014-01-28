@@ -1,5 +1,5 @@
 function Delay(time,times,input,output){
-	this.delayNodes;
+	this.delayNodes = new Array();
 	this.input = input;
 	this.times = times;
 	this.output = output;
@@ -9,9 +9,8 @@ function Delay(time,times,input,output){
 		delay.delayTime = time;
 		this.delayNodes.push(delay);
 
-		//initialize with first delay
+		//initialize with first delay connected to input
 		if(i === 0) { 
-			lastdelay = delay;
 			this.input.connect(delay);
 		}
 		//following delays will be connected to the one before
