@@ -18,8 +18,9 @@ function Track(file,parent){
 	  this.panner.setPosition(x, 0, 0);
 	}
 
+	//TODO: play with targetattime to reduce artifacts
 	this.setVolume = function(time,value){
-		this.gainnode.gain.setTargetAtTime(value,time,0.2);
+		this.gainnode.gain.setTargetAtTime(value,time,1);
 	}
 
 	this.fadeOut = function(){
@@ -34,9 +35,10 @@ function Track(file,parent){
 	this.finishedLoading = function(bufferlist){
 		this.source = acontext.createBufferSource();
 		this.source.buffer = bufferlist[0];
+		//this.source.playbackRate.value = 3.0;
 		this.source.loop = false;
 		this.source.connect(this.panner);
-		this.length = this.source.buffer.duration;
+		this.length = this.source.buffer.duration/*/3*/;
 		this.panner.connect(this.gainnode);
 		if (parent != null) {
 			this.parent.trackIsLoaded(this.length);

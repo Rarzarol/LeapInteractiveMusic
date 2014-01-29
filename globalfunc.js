@@ -17,7 +17,7 @@ function parseLeapData(frame,hand){
 		realX += 400;
 		if (realX >= 0 && realX <= 800){
 			realX /= 800;
-			console.log("Pos X: "+realX);
+			//console.log("Pos X: "+realX);
 		}
 		else if(realX > 800) realX = 1;
 		else if(realX <= 0) realX = 0;
@@ -27,15 +27,15 @@ function parseLeapData(frame,hand){
 		realZ += 200;
 		if (realZ >= 0 && realZ <= 500){
 			realZ /= 500;
-			console.log("Pos Z: "+realZ);
+			//console.log("Pos Z: "+realZ);
 		}
 		else if(realZ > 500) realZ = 1;
 		else if(realZ <= 0) realZ = 0;
 
 		//console.log("realY:"+realY);
 
-		console.log("Original Leap Positions: "+palmPosX.toFixed(3)+"|"+palmPosY.toFixed(3)+"|"+palmPosZ.toFixed(3));
-		console.log("Parsed Leap Positions: "+realX.toFixed(3)+"|"+realY.toFixed(3)+"|"+realZ.toFixed(3));
+/*		console.log("Original Leap Positions: "+palmPosX.toFixed(3)+"|"+palmPosY.toFixed(3)+"|"+palmPosZ.toFixed(3));
+		console.log("Parsed Leap Positions: "+realX.toFixed(3)+"|"+realY.toFixed(3)+"|"+realZ.toFixed(3));*/
 
 		var myPositions = [realX,realY,realZ];
 		return myPositions;

@@ -1,5 +1,7 @@
-function Song(songPartTreeArray){
+function Song(songPartTreeArray,bpm){
 
+	this.bpm = bpm;
+	this.bps = bpm/60;
 	this.startTime;
 	this.endTime;
 	this.songParts = songPartTreeArray;
@@ -27,10 +29,13 @@ function Song(songPartTreeArray){
 	}
 
 	this.mix = function(x,y,z){
+		//maybe always mix 3? Current node and following nodes
 		this.currentVals[0] = x;
 		this.currentVals[1] = y;
 		this.currentVals[2] = z;
-		this.songParts[this.currentIndex].mixTrackStacks(x,y,z);
+		this.songParts.forEach(function(songPart){
+			songPart.mixTrackStacks(x,y,z);
+		});
 	}
 
 	this.startNextPart = function(bot_top_string){
@@ -44,8 +49,8 @@ function Song(songPartTreeArray){
 		}
 		this.songParts[nextIndex].startTime = this.songParts[this.currentIndex].endTime;
 		this.songParts[nextIndex].endTime = this.songParts[nextIndex].startTime + this.songParts[nextIndex].maxPartLength;
+		this.songParts[nextIndex].startSongPart(this.songParts[this.currentIndex].endTime-0.05);
 
-		this.songParts[nextIndex].startSongPart(this.songParts[this.currentIndex].endTime);
 
 		this.currentIndex = nextIndex;
 	}

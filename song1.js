@@ -4,16 +4,22 @@
 	["choir_both_a.wav","choir_both_e.wav","choir_both_i.wav"],
 	["choir_alto_a.wav","choir_alto_e.wav","choir_alto_i.wav"]
 	]);*/
+var imgCon = new ImageController();
 
-var part1 = new SongPart([["testSounds/SongPart1_unten.wav","testSounds/SongPart1_mitte.wav","testSounds/SongPart1_oben.wav"],["testSounds/SongPart1_unten.wav","testSounds/SongPart1_mitte.wav","testSounds/SongPart1_oben.wav"]]);
+var part1 = new SongPart(
+	[
+	["finaltest/SP0_untenLinks.mp3","finaltest/SP0_mitteLinks.mp3","finaltest/SP0_obenLinks.mp3"],
+	["finaltest/SP0_untenMitte.mp3","finaltest/SP0_mitteMitte.mp3","finaltest/SP0_obenMitte.mp3"],
+	["finaltest/SP0_untenRechts.mp3","finaltest/SP0_mitteRechts.mp3","finaltest/SP0_obenRechts.mp3"]
+	]);
 
-var part2 = new SongPart([["testSounds/SongPart2_unten.wav","testSounds/SongPart2_mitte.wav","testSounds/SongPart2_oben.wav"],["testSounds/SongPart2_unten.wav","testSounds/SongPart2_mitte.wav","testSounds/SongPart2_oben.wav"]]);
+var part2 = new SongPart([["finaltest/SP1_akDr_unten.mp3","finaltest/SP1_akDr_oben.mp3"],["finaltest/SP1_akDr_unten.mp3","finaltest/SP1_akDr_oben.mp3"]]);
 
-var part3 = new SongPart([["testSounds/SongPart3_unten.wav","testSounds/SongPart3_mitte.wav","testSounds/SongPart3_oben.wav"],["testSounds/SongPart3_unten.wav","testSounds/SongPart3_mitte.wav","testSounds/SongPart3_oben.wav"]]);
+var part3 = new SongPart([["finaltest/SP2_elDr_unten.mp3","finaltest/SP2_elDr_oben.mp3"],["finaltest/SP2_elDr_unten.mp3","finaltest/SP2_elDr_oben.mp3"]]);
 
 //Global Reverb
 var reverb = new Reverb("rev_saintsilvain.wav");
 
 var partTree = [part1,part2,part3];
 
-var song0 = new Song(partTree);
+var song0 = new Song(partTree,120);

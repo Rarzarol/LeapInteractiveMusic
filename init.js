@@ -11,19 +11,6 @@ premixBus.connect(masterGain);
 masterGain.connect(acontext.destination);
 fxBus.connect(acontext.destination);
 
-//Canvas Init
-var canvas = document.getElementById( 'canvas' );
-var width = canvas.width;
-var height = canvas.height;
-var c =  canvas.getContext( '2d' );
-// Defines the font shape and size
-c.font = "30px Arial";
-c.textAlign = 'center';
-c.textBaseline = 'middle';
-
-var x = 0;
-var y = 0;
-
 //Leap Init
 var controller = new Leap.Controller();
 
@@ -43,8 +30,13 @@ setInterval(function(){
 		var hand = frame.hands[0];
 		parsedPosition = parseLeapData(frame,hand);
 		song0.mix(parsedPosition[0],parsedPosition[1],parsedPosition[2]);
+		$.event.trigger({
+			type: "newposition",
+			message: "new positions",
+			time: new Date()
+		});
 	}
-}, 50);
+}, 100);
 });
 
 var numinput = document.getElementById("numinput");

@@ -46,8 +46,8 @@ function SongPart(partFileArray,parent,siblings){
 			this.trackStacks[i].mixer.mixItems(y);
 		}
 		//STUB: Reverb mixing, still hardcoded
-		fxBus.gain.setValueAtTime(z,acontext.currentTime);
-		masterGain.gain.setValueAtTime(1-z,acontext.currentTime);
+		fxBus.gain.setValueAtTime(z/3,acontext.currentTime);
+		//masterGain.gain.setValueAtTime(1-z,acontext.currentTime);
 	}
 
 	//Constructor contd.

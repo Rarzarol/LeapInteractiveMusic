@@ -1,5 +1,6 @@
 var songStarted = false;
-var BUFFER_BETWEEN_PARTS = 0.003;
+var BUFFER_BETWEEN_PARTS = 0.8;
+var MS_BETWEEN_BEATS = 1/song0.bps
 
 function gameLoop(){
 
@@ -7,10 +8,12 @@ function gameLoop(){
 	if(!songStarted){
 		songStarted = song0.start();
 	}
-	//Animation
 
 	//Main loop
 	else{
+
+		//Beat check
+
 		//Check if end of SongPart is near
 		var currentPart = song0.getCurrentSongPart();
 		var currentTime = acontext.currentTime;
@@ -22,11 +25,24 @@ function gameLoop(){
 				//start bottom next SongPart
 				console.log("starting next bot part...");
 				song0.startNextPart("bot");
+
+				$.event.trigger({
+					type: "botchosen",
+					message: "bot was chosen",
+					time: new Date()
+				});
+
 			}
 			else{
 				//start upper next SongPart
 				console.log("starting next top part...");
 				song0.startNextPart("top");
+				//trigger an event to let animation know wassup
+				$.event.trigger({
+					type: "topchosen",
+					message: "top was chosen",
+					time: new Date()
+				});
 			};
 		}
 		else{
