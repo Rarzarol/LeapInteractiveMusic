@@ -14,7 +14,6 @@ function topChosenHandler(){
 
 }
 
-
 $(document).on("topchosen", topChosenHandler);
 
 $(document).on("botchosen", bottomChosenHandler);
