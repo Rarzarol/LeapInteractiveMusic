@@ -17,7 +17,7 @@ var controller = new Leap.Controller();
 //Global position data
 var palmPosX;
 var palmPosY;
-var parsedPosition;
+var parsedPosition = {};
 
 //Slow polling to save CPU cycles
 controller.on('connect', function(){
@@ -32,7 +32,7 @@ setInterval(function(){
 		song0.mix(parsedPosition[0],parsedPosition[1],parsedPosition[2]);
 		$.event.trigger({
 			type: "newposition",
-			message: "new positions",
+			message: "newposition",
 			time: new Date()
 		});
 	}

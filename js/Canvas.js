@@ -62,7 +62,7 @@ function newPositionHandler(){
     // die die Funktion so braucht])
 }
 
-$(document).on("newposition", newPositionHandler());
+$(document).on("newposition", newPositionHandler);
 
 window.requestAnimationFrame = (function(){
   return  window.requestAnimationFrame       ||
@@ -73,11 +73,30 @@ window.requestAnimationFrame = (function(){
           };
 })();
 
-// Event handlers 
-slider_value.onchange = function(e) {
-defaultval = e.target.value;
-if (defaultval < MIN_SCALE) imgCon.scale = MIN_SCALE;
-else if (defaultval > MAX_SCALE) imgCon.scale = MAX_SCALE;
+// Event handlers
+slider_x.onchange = function(e) {
+    parsedPosition[0] = e.target.value;
+    $.event.trigger({
+        type: "newposition",
+        message: "newposition",
+        time: new Date()
+    });
+};
+slider_y.onchange = function(e) {
+    parsedPosition[1] = e.target.value;
+    $.event.trigger({
+        type: "newposition",
+        message: "newposition",
+        time: new Date()
+    });
+};
+slider_z.onchange = function(e) {
+    parsedPosition[2] = e.target.value;
+    $.event.trigger({
+        type: "newposition",
+        message: "newposition",
+        time: new Date()
+    });
 };
 
 // Initialization
