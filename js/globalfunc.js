@@ -1,19 +1,28 @@
 //Globally used functions
 
+var smoothedX = 0;
+var smoothedY = 0;
+var smoothedZ = 0;
+var samples = 8;
+
 //Currently only parses Y coordinate, 600 is max value (parsed to 1) and 40 min value (parsed to 0)
 function parseLeapData(frame,hand){
 		palmPosX = hand.palmPosition[0];
 		palmPosY = hand.palmPosition[1];
 		palmPosZ = hand.palmPosition[2];
 
-		var realY = palmPosY;
+    smoothedX = smoothedX + ((palmPosX-smoothedX)/samples);
+    smoothedY = smoothedY + ((palmPosY-smoothedY)/samples);
+    smoothedZ = smoothedZ + ((palmPosZ-smoothedZ)/samples);
+
+		var realY = smoothedY;
 		if (realY >= 40 && realY <= 600){
 			realY -= 40;
 			realY /= 600;
 		}
 		else realY = 1;
 
-		var realX = palmPosX;
+		var realX = smoothedX;
 		realX += 400;
 		if (realX >= 0 && realX <= 800){
 			realX /= 800;
@@ -23,7 +32,7 @@ function parseLeapData(frame,hand){
 		else if(realX <= 0) realX = 0;
 
 		//-200 -> 300, 500
-		var realZ = palmPosZ;
+		var realZ = smoothedZ;
 		realZ += 200;
 		if (realZ >= 0 && realZ <= 500){
 			realZ /= 500;
