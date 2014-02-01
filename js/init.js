@@ -36,7 +36,7 @@ setInterval(function(){
 			time: new Date()
 		});
 	}
-}, 100);
+},20);
 });
 
 var numinput = document.getElementById("numinput");

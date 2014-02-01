@@ -36,7 +36,7 @@ function TrackStack(files, parent){
 	}
 
 	this.setVolume = function(time,value){
-		this.gainnode.gain.setTargetAtTime(value,time,0.2);
+		this.gainnode.gain.linearRampToValueAtTime(value,time+0.01);
 	}
 
 	this.fadeOut = function(){

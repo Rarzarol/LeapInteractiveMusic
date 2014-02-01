@@ -59,18 +59,18 @@ function Mixer(items,parent){
 
 			//if movement downwards/to the left:
 			if (this.aboveItem === this.lastBelowItem) {
-				console.log("Keeping last below Item as current aboveItem");
+				//console.log("Keeping last below Item as current aboveItem");
 				this.lastAboveItem.fadeOut();
 			}
 			
 			//if movement upwards/to the right:
 			else if (this.belowItem === this.lastAboveItem) {
-				console.log("Keeping last above Item as current belowItem");
+				//console.log("Keeping last above Item as current belowItem");
 				this.lastBelowItem.fadeOut();
 			}
 			//Turn both Items down, because hand is between two different Items
 			else {
-				/*console.log("Dismiss aboveItem and belowItem because value is between two different ones");*/
+				console.log("Dismiss aboveItem and belowItem because value is between two different ones");
 				this.lastBelowItem.fadeOut();
 				this.lastAboveItem.fadeOut();
 				this.lastBelowItem = this.belowItem;
@@ -83,12 +83,12 @@ function Mixer(items,parent){
 
 		//Calculate percentage: 0 -> value on belowItem 1 -> value on aboveItem
 		var relvalue = (value - this.belowItem.mixPosition)*(this.items.length - 1);
-/*		console.log("relative distance between 2 current Items: " + relvalue);*/
+		//console.log("relative distance between 2 current Items: " + relvalue);
 
 		//Set volume accordingly
-/*		console.log("setting aboveItem to " + Number(relvalue));*/
+		console.log("setting aboveItem to " + Number(relvalue).toFixed(1));
 		this.aboveItem.setVolume(acontext.currentTime,relvalue);
-/*		console.log("setting belowItem to " + Number(1-relvalue));*/
+		console.log("setting belowItem to " + Number(1-relvalue).toFixed(1));
 		this.belowItem.setVolume(acontext.currentTime,1-relvalue);
 	}
 	this.placeItemsOnAxis();

@@ -18,13 +18,12 @@ function Track(file,parent){
 	  this.panner.setPosition(x, 0, 0);
 	}
 
-	//TODO: play with targetattime to reduce artifacts
 	this.setVolume = function(time,value){
-		this.gainnode.gain.setTargetAtTime(value,time,1);
+        this.gainnode.gain.linearRampToValueAtTime(value,time+0.2);
 	}
 
 	this.fadeOut = function(){
-		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+0.2);
+		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+0.1);
 	}
 
 	this.loadAsSample = function(string){
