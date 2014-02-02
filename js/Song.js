@@ -40,7 +40,6 @@ function Song(songPartTreeArray,bpm){
 	}
 
 	this.startNextPart = function(bot_top_string){
-		//todo: is there a next index??
 		var nextIndex;
 		if(bot_top_string === "top"){
 			nextIndex = 2*this.currentIndex+2;
@@ -48,9 +47,10 @@ function Song(songPartTreeArray,bpm){
 		if(bot_top_string === "bot"){
 			nextIndex = 2*this.currentIndex+1;
 		}
+        if(this.songParts[nextIndex] == undefined){ return false; }
 		this.songParts[nextIndex].startTime = this.songParts[this.currentIndex].endTime;
 		this.songParts[nextIndex].endTime = this.songParts[nextIndex].startTime + this.songParts[nextIndex].maxPartLength;
-		this.songParts[nextIndex].startSongPart(this.songParts[this.currentIndex].endTime-0.05);
+		this.songParts[nextIndex].startSongPart(this.songParts[this.currentIndex].endTime);
 
 
 		this.currentIndex = nextIndex;

@@ -7,7 +7,7 @@ function Track(file,parent){
 	this.panner	  = acontext.createPanner();
 	this.panner.panningModel = this.panner.EQUALPOWER;
 	this.panner.setPosition(0, 0, 0);
-	this.gainnode.gain.setValueAtTime(1,acontext.currentTime);
+	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
 	this.length;
 	this.source;
 
