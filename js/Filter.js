@@ -1,16 +1,27 @@
-function Filter(input,output,gain,hz,Q,bandwidth){
-
+function Filter(gain,hz,Q){
 	this.filter = acontext.createBiquadFilter();
-	this.filter.gain = gain;
+	this.filter.gain.setValueAtTime(gain,acontext.currentTime);
 	this.filter.type = "peaking";
 	this.filter.Q = Q;
 	this.filter.frequency = hz;
+    this.input;
+    this.output = fxBus;
 
-	input.connect(this.filter);
-	this.filter.connect(output);
+    this.connect = function(input){
+        input.connect(this.filter);
+        this.filter.connect(this.output);
+    };
 
-	this.changeFreqAtTime(freq,time){
-		this.filter.frequency.linearRampToValueAtTime(freq,time);
-	}
+	this.changeFreqAtTime = function(freq,time){
+		this.filter.frequency.setValueAtTime(freq,time);
+	};
+
+    this.changeQAtTime = function(q,time){
+        this.filter.Q.setValueAtTime(q,time);
+    };
+
+    this.changeGainAtTime = function(gain,time){
+        this.filter.gain.setValueAtTime(gain,time);
+    };
 
 }

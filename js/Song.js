@@ -35,6 +35,7 @@ function Song(songPartTreeArray,bpm){
 		this.currentVals[2] = z;
 		this.songParts.forEach(function(songPart){
 			songPart.mixTrackStacks(x,y,z);
+            songPart.changeFX(x,y,z);
 		});
 	}
 
@@ -71,7 +72,7 @@ function Song(songPartTreeArray,bpm){
 			return true;
 		}
 		else {
-			console.log("not all files are loaded!!");
+			//console.log("not all files are loaded!!");
 			return false;
 		}
 	}

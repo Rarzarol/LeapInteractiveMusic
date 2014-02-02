@@ -1,6 +1,5 @@
 var songStarted = false;
 var BUFFER_BETWEEN_PARTS = 0.8;
-var MS_BETWEEN_BEATS = 1/song0.bps
 
 function gameLoop(){
 

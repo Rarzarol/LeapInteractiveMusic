@@ -1,36 +1,53 @@
-function Delay(time,times,input,output){
+function Delay(time,times){
 	this.delayNodes = new Array();
-	this.input = input;
 	this.times = times;
-	this.output = output;
+    this.input;
+    this.time = time;
+	this.output = fxBus;
 	this.lastdelay;
-	for (var i = times.length - 1; i >= 0; i--) {
-		var delay = acontext.createDelay();
-		delay.delayTime = time;
-		this.delayNodes.push(delay);
+    this.isConnected = false;
+    this.TIMEDELTA = 0.7;
 
-		//initialize with first delay connected to input
-		if(i === 0) { 
-			this.input.connect(delay);
-		}
-		//following delays will be connected to the one before
-		else{
-			this.lastdelay.connect(delay);
+	this.connect = function(input){
+        if(!this.isConnected){
+            this.input = input;
+            for (var i = 0; i <= this.times-1; i++) {
+                var delay = acontext.createDelay();
+                delay.delayTime = this.time;
+                this.delayNodes.push(delay);
 
-			//finally, when last delay is reached it is connected to actual output
-			if(i === this.times.length){
-				this.delay.connect(this.output);
-			}
-		}
+                //initialize with first delay connected to input
+                if(i == 0) {
+                    console.log("connecting first delay node to its input");
+                    this.input.connect(delay);
+                }
+                //following delays will be connected to the one before
+                else{
+                    console.log("connecting additional delay...");
+                    this.lastdelay.connect(delay);
 
-		//remember last delay for next connection
-		this.lastdelay = delay;
-	};
+                    //finally, when last delay is reached it is connected to actual output
+                    if(i == this.times-1){
+                        console.log("connecting last delaynode to output");
+                        delay.connect(this.output);
+                    }
+                }
+
+                //remember last delay for next connection
+                this.lastdelay = delay;
+                //TODO: hardcoded change
+                this.time+=this.TIMEDELTA;
+                console.log("SetupDelayNodes: newtime"+this.time);
+            }
+
+            this.isConnected = true;
+        }
+    };
 
 	this.changeDelayTime = function(time){
-		for (var i = delayNodes.length - 1; i >= 0; i--) {
-			delayNodes[i].delayTime = time;
-		};
+		for (var i = this.delayNodes.length - 1; i >= 0; i--) {
+			this.delayNodes[i].delayTime = time;
+            time+=this.TIMEDELTA;
+		}
 	}
-
 }

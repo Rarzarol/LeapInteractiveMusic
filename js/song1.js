@@ -13,12 +13,17 @@ var part1 = new SongPart(
 	["finaltest/SP0_untenRechts.mp3","finaltest/SP0_mitteRechts.mp3","finaltest/SP0_obenRechts.mp3"]
 	]);
 
+/*var part1FX = new Filter(2.440,2);
+part1.createFXTrack("finaltest/SP1_akDr_oben.mp3",part1FX,0.4);*/
+
 var part2 = new SongPart([["finaltest/SP1_akDr_unten.mp3","finaltest/SP1_akDr_oben.mp3"],["finaltest/SP1_akDr_unten.mp3","finaltest/SP1_akDr_oben.mp3"]]);
+
+
 
 var part3 = new SongPart([["finaltest/SP2_elDr_unten.mp3","finaltest/SP2_elDr_oben.mp3"],["finaltest/SP2_elDr_unten.mp3","finaltest/SP2_elDr_oben.mp3"]]);
 
 //Global Reverb
-var reverb = new Reverb("rev_saintsilvain.wav");
+var reverb = new Reverb("rev_saintsilvain.wav",0.2);
 
 var partTree = [part1,part2,part3];
 

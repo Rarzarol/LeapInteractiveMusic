@@ -11,17 +11,19 @@ function parseLeapData(frame,hand){
 		palmPosY = hand.palmPosition[1];
 		palmPosZ = hand.palmPosition[2];
 
-    smoothedX = smoothedX + ((palmPosX-smoothedX)/samples);
-    smoothedY = smoothedY + ((palmPosY-smoothedY)/samples);
-    smoothedZ = smoothedZ + ((palmPosZ-smoothedZ)/samples);
+        smoothedX = smoothedX + ((palmPosX-smoothedX)/(samples/3));
+        smoothedY = smoothedY + ((palmPosY-smoothedY)/(samples/3));
+        smoothedZ = smoothedZ + ((palmPosZ-smoothedZ)/samples);
 
 		var realY = smoothedY;
-		if (realY >= 40 && realY <= 600){
+		if (realY >= 40 && realY <= 500){
 			realY -= 40;
-			realY /= 600;
+			realY /= 500;
 		}
-		else realY = 1;
-
+		else if (realY < 40){ realY = 0;
+        }
+        else if(realY > 500){ realY = 1;
+        }
 		var realX = smoothedX;
 		realX += 400;
 		if (realX >= 0 && realX <= 800){

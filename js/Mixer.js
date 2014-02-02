@@ -8,18 +8,18 @@ function Mixer(items,parent){
 	this.parent = parent;
 
 	//Currently active items between which mixing occurs
-	this.aboveItem;
-	this.belowItem;
+	this.aboveItem = undefined;
+	this.belowItem = undefined;
 
 	//Last active items are remembered for mixing purposes
-	this.lastAboveitem;
-	this.lastBelowitem;
+	this.lastAboveitem = undefined;
+	this.lastBelowitem = undefined;
 
 	//Places the items on an axis, evenly distributed, bottom/left to top/right
 	this.placeItemsOnAxis = function(){
 		var currentpos = 0;
 		for (var i = 0 ; i <= this.items.length - 1; i++){
-			console.log("item id "+i+" has mixPosition: "+currentpos);
+			//console.log("item id "+i+" has mixPosition: "+currentpos);
 			this.items[i].mixPosition = currentpos;
 			currentpos += this.distance;
 		};
@@ -70,7 +70,7 @@ function Mixer(items,parent){
 			}
 			//Turn both Items down, because hand is between two different Items
 			else {
-				console.log("Dismiss aboveItem and belowItem because value is between two different ones");
+				//console.log("Dismiss aboveItem and belowItem because value is between two different ones");
 				this.lastBelowItem.fadeOut();
 				this.lastAboveItem.fadeOut();
 				this.lastBelowItem = this.belowItem;
@@ -86,9 +86,9 @@ function Mixer(items,parent){
 		//console.log("relative distance between 2 current Items: " + relvalue);
 
 		//Set volume accordingly
-		console.log("setting aboveItem to " + Number(relvalue).toFixed(1));
+		//console.log("setting aboveItem to " + Number(relvalue).toFixed(1));
 		this.aboveItem.setVolume(acontext.currentTime,relvalue);
-		console.log("setting belowItem to " + Number(1-relvalue).toFixed(1));
+		//console.log("setting belowItem to " + Number(1-relvalue).toFixed(1));
 		this.belowItem.setVolume(acontext.currentTime,1-relvalue);
 	}
 	this.placeItemsOnAxis();

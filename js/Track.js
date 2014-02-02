@@ -7,7 +7,7 @@ function Track(file,parent){
 	this.panner	  = acontext.createPanner();
 	this.panner.panningModel = this.panner.EQUALPOWER;
 	this.panner.setPosition(0, 0, 0);
-	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
+	this.gainnode.gain.setValueAtTime(1,acontext.currentTime);
 	this.length;
 	this.source;
 
@@ -16,20 +16,20 @@ function Track(file,parent){
 	  //Converts degrees to radians in the process
 	  var x = Math.sin(range.value * (Math.PI / 180));
 	  this.panner.setPosition(x, 0, 0);
-	}
+	};
 
 	this.setVolume = function(time,value){
         this.gainnode.gain.linearRampToValueAtTime(value,time+0.2);
-	}
+	};
 
 	this.fadeOut = function(){
-		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+0.1);
-	}
+		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+0.2);
+	};
 
 	this.loadAsSample = function(string){
 		this.bufferLoader = new BufferLoader(acontext,[string],this.finishedLoading.bind(this));
 		this.bufferLoader.load();
-	}
+	};
 
 	this.finishedLoading = function(bufferlist){
 		this.source = acontext.createBufferSource();
@@ -39,15 +39,18 @@ function Track(file,parent){
 		this.source.connect(this.panner);
 		this.length = this.source.buffer.duration/*/3*/;
 		this.panner.connect(this.gainnode);
-		if (parent != null) {
+		if (parent instanceof TrackStack) {
 			this.parent.trackIsLoaded(this.length);
 		}
-	}
+        else if(parent instanceof SongPart){
+            this.parent.trackStackLoaded(this.length);
+        }
+	};
 
 	//Accessed externally
 	this.startTrack = function(time){
 		this.source.start(time);
-	}
+	};
 
 	this.loadAsSample(file);
 
