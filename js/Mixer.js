@@ -1,7 +1,7 @@
 //Mixer class
 function Mixer(items,parent){
 
-	this.distance = 1 / (items.length-1);
+	this.distance = (items.length < 2) ? 0 : 1 / (items.length-1);
 	console.log("distance between each track is "+this.distance);
 
 	this.items = items;
@@ -30,6 +30,10 @@ function Mixer(items,parent){
 	//Expects value between 0 and 1 (absolute hand position).
 	//Breaks it down into relative value between 0 and 1 depending on position between 2 Items.
 	this.mixItems = function(value){
+        if(this.items.length < 2){
+            items[0].setVolume(acontext.currentTime,1);
+            return;
+        }
 		//Do something with the Items Array, mix according to value 0-1
 /*		console.log("_____________________________________________________");
 		console.log("Value: "+value);*/

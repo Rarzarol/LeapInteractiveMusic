@@ -23,7 +23,7 @@ var part2 = new SongPart([["finaltest/SP1_akDr_unten.mp3","finaltest/SP1_akDr_ob
 var part3 = new SongPart([["finaltest/SP2_elDr_unten.mp3","finaltest/SP2_elDr_oben.mp3"],["finaltest/SP2_elDr_unten.mp3","finaltest/SP2_elDr_oben.mp3"]]);
 
 //Global Reverb
-var reverb = new Reverb("rev_saintsilvain.wav",0.2);
+var reverb = new Reverb("rev_saintsilvain.wav",0.1);
 
 var partTree = [part1,part2,part3];
 
