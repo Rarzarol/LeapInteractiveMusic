@@ -1,6 +1,4 @@
-function SongPart(partFileArray,parent,siblings){
-	this.siblings = siblings;
-	this.parent = parent;
+function SongPart(partFileArray){
 	this.loaded = false;
 	this.fileArray = partFileArray;
 	this.trackStacks = new Array();

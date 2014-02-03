@@ -1,5 +1,9 @@
-body {
-background: #000;;
+html, body {
+    overflow:hidden;
+    width:  100%;
+    height: 100%;
+    margin: 0;
+    background: #000;
 }
 #controls {
 margin-left: 15px;
@@ -10,18 +14,7 @@ vertical-align: 10px;
 width: 200px;
 margin-left: 90px;
 }
-#scaleOutput {
-position: absolute;
-width: 60px;
-height: 30px;
-margin-left: 10px;
-vertical-align: center;
-text-align: center;
-color: Black;
-font: 20px Verdana;
-}
 #mycanvas {
-margin: 10px 20px 0px 20px;
-border: thin solid Black;
-cursor: crosshair;
+margin: 0 0 0 0;
+cursor: none;
 }

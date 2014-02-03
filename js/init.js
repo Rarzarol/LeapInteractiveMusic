@@ -39,11 +39,6 @@ setInterval(function(){
 },20);
 });
 
-var numinput = document.getElementById("numinput");
-numinput.onchange = function changeHandler() {
-    song1.mixTracks(this.value,0,0);
-};
-
 //Fast polling, more taxing on CPU
 //Right now only "frame", not device/animation frames
 /*

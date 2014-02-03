@@ -1,4 +1,4 @@
-function Track(file,parent){
+function Track(file,parent,maxVolume){
 	this.parent   = parent;
 	this.file     = file;
 	this.mixPosition = 0;
@@ -10,6 +10,7 @@ function Track(file,parent){
 	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
 	this.length;
 	this.source;
+    this.maxVolume = (maxVolume == undefined) ? 1 : maxVolume;
 
 	//Panner takes arguments in degrees. -90 to 90 degrees for total left/right panning.
 	this.pan = function(range){
@@ -19,7 +20,7 @@ function Track(file,parent){
 	};
 
 	this.setVolume = function(time,value){
-        this.gainnode.gain.linearRampToValueAtTime(value,time+0.2);
+        this.gainnode.gain.linearRampToValueAtTime(value*this.maxVolume,time+0.2);
 	};
 
 	this.fadeOut = function(){

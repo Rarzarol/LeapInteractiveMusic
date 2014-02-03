@@ -13,7 +13,11 @@ function TrackStack(files, parent){
 	this.createTracks = function(){
 		//loads all associated tracks from disk, starts loading process
 		for (var i = 0; i <= files.length - 1; i++){
-			var track = new Track(files[i],this);
+            var volume;
+            var filename;
+            files[i] instanceof Array ? volume = files[i][1] : volume = 1;
+            files[i] instanceof Array ? filename = files[i][0] : filename = files[i];
+			var track = new Track(filename,this,volume);
 		    track.gainnode.connect(this.gainnode);
 		    this.tracks.push(track);
 		};
