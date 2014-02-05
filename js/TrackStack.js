@@ -56,7 +56,7 @@ function TrackStack(files, parent){
 	};
 
 	this.fadeOut = function(fadeTime){
-		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+fadeTime);
+		this.gainnode.gain.linearRampToValueAtTime(0,fadeTime);
 	};
 
 	//Constructor continued

@@ -1,6 +1,6 @@
 var songStarted = false;
 var BUFFER_BETWEEN_PARTS = 0.8;
-var TIME_UNTIL_RESTART = 15;
+var TIME_UNTIL_RESTART = 5;
 var timeOfHandNotRecognized;
 var handsNotInFrameDiff;
 var paused = true;
@@ -13,7 +13,7 @@ function gameLoop(){
         handsNotInFrameDiff = acontext.currentTime - timeOfHandNotRecognized;
         if(handsNotInFrameDiff >= TIME_UNTIL_RESTART){
             //console.log("hand not recognized for set duration! restarting song");
-            currentSong.stop(0.5);
+            currentSong.stop(5);
             imgCon.fadeIn();
             paused = true;
         }

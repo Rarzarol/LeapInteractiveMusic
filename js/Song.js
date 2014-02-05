@@ -26,14 +26,19 @@ function Song(songPartTreeArray,bpm){
     this.restart = function(){
         this.songParts.forEach(function(songPart){
             songPart.restart();
-        })
+        });
         this.start();
     };
 
-    this.stop = function(fadetime){
-        var stopTime = acontext.currentTime + fadetime;
+    this.stop = function(time){
+        var currTime = acontext.currentTime;
+        var fadeTime = currTime+time;
+        var stopTime = fadeTime;
+        console.log("current time: "+currTime.toFixed(2));
+        console.log("FadeTime"+fadeTime.toFixed(2)+"StopTime"+stopTime.toFixed(2));
         this.songParts.forEach(function(songPart){
             //maybe add fade
+            songPart.fadeOut(fadeTime);
             songPart.stop(stopTime);
             songStarted = false;
         })

@@ -31,7 +31,7 @@ function Track(file,parent,maxVolume){
 	};
 
 	this.fadeOut = function(fadetime){
-		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+fadetime);
+		this.gainnode.gain.linearRampToValueAtTime(0,fadetime);
 	};
 
 	this.loadAsSample = function(string){

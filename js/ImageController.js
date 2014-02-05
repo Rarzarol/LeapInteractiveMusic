@@ -15,6 +15,10 @@ function ImageController(){
         this.isFadeOut = false;
     };
 
+    this.getGradientPos = function(){
+        return this.gradientPosition
+    };
+
     this.getIntroAlpha = function(){
         if (this.isFadeOut){
             if (this.introAlpha - FADE_DELTA > 0) {
