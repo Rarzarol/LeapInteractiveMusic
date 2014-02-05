@@ -6,7 +6,7 @@ function TrackStack(files, parent){
 	this.mixPosition = 0;
 	this.gainnode 	 = acontext.createGain();
 	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
-	this.gainnode.connect(premixBus);
+	this.gainnode.connect(masterGain);
 	this.maxFileLength = 0;
 	this.mixer;
 
@@ -20,8 +20,20 @@ function TrackStack(files, parent){
 			var track = new Track(filename,this,volume);
 		    track.gainnode.connect(this.gainnode);
 		    this.tracks.push(track);
-		};
-	}
+		}
+	};
+
+    this.stop = function(time){
+        this.tracks.forEach(function(track){
+            track.stop(time);
+        })
+    };
+
+    this.restart = function(){
+        this.tracks.forEach(function(track){
+            track.reloadBuffer();
+        })
+    };
 
 	this.trackIsLoaded = function(length){
 		this.filecounter += 1;
@@ -30,22 +42,22 @@ function TrackStack(files, parent){
 		if (this.filecounter == this.files.length){
 			this.parent.trackStackLoaded(this.maxFileLength);
 		}
-	}
+	};
 
 	this.startTrackStack = function(time){
 		this.tracks.forEach(function(track){
 			track.startTrack(time);
 		});
 
-	}
+	};
 
 	this.setVolume = function(time,value){
 		this.gainnode.gain.linearRampToValueAtTime(value,time+0.01);
-	}
+	};
 
-	this.fadeOut = function(){
-		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+0.2);
-	}
+	this.fadeOut = function(fadeTime){
+		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+fadeTime);
+	};
 
 	//Constructor continued
 	this.createTracks();

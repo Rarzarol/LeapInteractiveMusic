@@ -13,7 +13,6 @@ function Song(songPartTreeArray,bpm){
 	//Loop takes care of subsequent actions.
 	this.start = function(){
 		//check if every file is loaded
-		if(this.allFilesLoaded()){
 			//calculate positions for first part
 			this.startTime = acontext.currentTime+3;
 			this.songParts[0].startTime = this.startTime;
@@ -21,12 +20,24 @@ function Song(songPartTreeArray,bpm){
 			this.currentIndex = 0;
 			//start first songpart. the loop will take care of subsequent starts.
 			this.songParts[0].startSongPart(this.startTime);
-			return true;
-		}
-		else {
-			return false;
-		};
-	}
+            songStarted = true;
+    };
+
+    this.restart = function(){
+        this.songParts.forEach(function(songPart){
+            songPart.restart();
+        })
+        this.start();
+    };
+
+    this.stop = function(fadetime){
+        var stopTime = acontext.currentTime + fadetime;
+        this.songParts.forEach(function(songPart){
+            //maybe add fade
+            songPart.stop(stopTime);
+            songStarted = false;
+        })
+    };
 
 	this.mix = function(x,y,z){
 		//maybe always mix 3? Current node and following nodes
@@ -37,7 +48,7 @@ function Song(songPartTreeArray,bpm){
 			songPart.mixTrackStacks(x,y,z);
             songPart.changeFX(x,y,z);
 		});
-	}
+	};
 
 	this.startNextPart = function(bot_top_string){
 		var nextIndex;
@@ -47,18 +58,17 @@ function Song(songPartTreeArray,bpm){
 		if(bot_top_string === "bot"){
 			nextIndex = 2*this.currentIndex+1;
 		}
-        if(this.songParts[nextIndex] == undefined){ return false; }
+        if(this.songParts[nextIndex] == undefined){ return true; }
 		this.songParts[nextIndex].startTime = this.songParts[this.currentIndex].endTime;
 		this.songParts[nextIndex].endTime = this.songParts[nextIndex].startTime + this.songParts[nextIndex].maxPartLength;
 		this.songParts[nextIndex].startSongPart(this.songParts[this.currentIndex].endTime);
-
-
 		this.currentIndex = nextIndex;
-	}
+        return false;
+	};
 
 	this.getCurrentSongPart = function(){
 		return this.songParts[this.currentIndex];
-	}
+	};
 
 	this.allFilesLoaded = function(){
 		var counter = 0;

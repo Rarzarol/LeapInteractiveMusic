@@ -9,7 +9,7 @@ function Reverb(file,volume){
 	this.convolver = acontext.createConvolver();
 
 	if (this.input === undefined){
-		this.input = premixBus;
+		this.input = masterGain;
 	}
 	this.input.connect(this.convolver);
 	this.convolver.connect(this.gain);

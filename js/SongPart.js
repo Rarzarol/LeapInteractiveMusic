@@ -32,15 +32,32 @@ function SongPart(partFileArray){
            if(this.effect instanceof Delay){
                this.effect.changeDelayTime(z);
            }
+           if(this.effect instanceof Phaser){
+               this.effect.changeDepth(z);
+               this.effect.changeRate(y);
+           }
 
        }
+    };
+
+    this.restart = function(){
+        this.trackStacks.forEach(function(trackStack){
+            trackStack.restart();
+        })
+    };
+
+    this.fadeOut = function(fadetime){
+      this.trackStacks.forEach(function(trackStack){
+          trackStack.fadeOut(fadetime);
+      })
     };
 
     this.createFXTrack = function(file,effect,gain){
         this.effect = effect;
         this.FXTrack = new Track(file,this);
         this.FXTrack.setVolume(acontext.currentTime,gain);
-        effect.connect(this.FXTrack.gainnode);
+        //maybe connect to source directly
+        this.effect.connect(this.FXTrack.gainnode);
     };
 
 	this.createTrackStacks = function(){
@@ -59,6 +76,12 @@ function SongPart(partFileArray){
 			this.loaded = true;
 		}
 	};
+
+    this.stop = function(time){
+        this.trackStacks.forEach(function(trackStack){
+            trackStack.stop(time);
+        })
+    };
 
 	this.startSongPart = function(time){
 		this.trackStacks.forEach(function(trackStack){

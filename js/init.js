@@ -1,12 +1,14 @@
 //Initialization of AudioContext, 2d Canvas Context, Leap Controller
 
 //Audio Init
-var acontext = new window.webkitAudioContext();
-var masterGain = acontext.createGain();
-var premixBus = acontext.createGain();
-var fxBus	= acontext.createGain();
-fxBus.gain.setValueAtTime(1,acontext.currentTime);
-premixBus.connect(masterGain);
+var acontext    = new window.webkitAudioContext();
+var tuna        = new Tuna(acontext);
+var masterGain  = acontext.createGain();
+var fxBus	    = acontext.createGain();
+
+fxBus.gain.setValueAtTime(2,acontext.currentTime);
+
+var currentSong;
 
 masterGain.connect(acontext.destination);
 fxBus.connect(acontext.destination);
@@ -18,6 +20,7 @@ var controller = new Leap.Controller();
 var palmPosX;
 var palmPosY;
 var parsedPosition = {};
+var handInScene;
 
 //Slow polling to save CPU cycles
 controller.on('connect', function(){
@@ -27,33 +30,31 @@ setInterval(function(){
 
 	//Always use first hand
 	if (frame.hands.length > 0){
+        handInScene = true;
+        timeOfHandNotRecognized = 0;
 		var hand = frame.hands[0];
 		parsedPosition = parseLeapData(frame,hand);
-		song0.mix(parsedPosition[0],parsedPosition[1],parsedPosition[2]);
+		if (currentSong != undefined){ currentSong.mix(parsedPosition[0],parsedPosition[1],parsedPosition[2]); }
 		$.event.trigger({
 			type: "newposition",
 			message: "newposition",
 			time: new Date()
 		});
 	}
-},20);
+    else{
+        //set flag: hands not recognized
+        if(timeOfHandNotRecognized == 0){
+            timeOfHandNotRecognized = acontext.currentTime
+        }
+        handInScene = false;
+    }
+},10); //20 safe
 });
 
 //Fast polling, more taxing on CPU
 //Right now only "frame", not device/animation frames
 /*
 controller.on( 'frame' , function( frame ) {
-	c.clearRect(0,0,width,height);
-	 //Tells Canvas to draw the input string at the defined position
-	c.fillText( y , width/2 , height/2 );
-
-	//Always use first hand
-	if (frame.hands.length > 0){
-		var hand = frame.hands[0];
-		var palmPosY = hand.palmPosition[1];
-		var palmPosX = hand.palmPosition[0];
-		//Debug output
-		console.log("Ypos: "+palmPosY+ "Xpos: "+palmPosX);
-	}
+...
 });
 */

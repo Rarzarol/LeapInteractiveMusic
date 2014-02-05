@@ -10,6 +10,9 @@ function Track(file,parent,maxVolume){
 	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
 	this.length;
 	this.source;
+
+    this.buffer;
+
     this.maxVolume = (maxVolume == undefined) ? 1 : maxVolume;
 
 	//Panner takes arguments in degrees. -90 to 90 degrees for total left/right panning.
@@ -19,12 +22,16 @@ function Track(file,parent,maxVolume){
 	  this.panner.setPosition(x, 0, 0);
 	};
 
+    this.stop = function(time){
+        this.source.stop(time);
+    };
+
 	this.setVolume = function(time,value){
         this.gainnode.gain.linearRampToValueAtTime(value*this.maxVolume,time+0.2);
 	};
 
-	this.fadeOut = function(){
-		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+0.2);
+	this.fadeOut = function(fadetime){
+		this.gainnode.gain.linearRampToValueAtTime(0,acontext.currentTime+fadetime);
 	};
 
 	this.loadAsSample = function(string){
@@ -33,6 +40,8 @@ function Track(file,parent,maxVolume){
 	};
 
 	this.finishedLoading = function(bufferlist){
+        //Buffer is saved for later reloading
+        this.buffer = bufferlist[0];
 		this.source = acontext.createBufferSource();
 		this.source.buffer = bufferlist[0];
 		//this.source.playbackRate.value = 3.0;
@@ -47,6 +56,14 @@ function Track(file,parent,maxVolume){
             this.parent.trackStackLoaded(this.length);
         }
 	};
+
+    this.reloadBuffer = function(){
+        this.source = acontext.createBufferSource();
+        this.source.buffer = this.buffer;
+        this.source.loop = false;
+        this.source.connect(this.panner);
+        this.panner.connect(this.gainnode);
+    };
 
 	//Accessed externally
 	this.startTrack = function(time){

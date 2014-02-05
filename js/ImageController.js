@@ -1,37 +1,38 @@
-//Dieses Objekt repräsentiert den aktuellen Zustand des Bildes
-//und wird im drawLoop abgefragt und von Events verändert.
+var FADE_DELTA = 0.05;
+
 function ImageController(){
-
-    //Skalierung des Bildes
+    this.visibleLines = 1;
+    this.introAlpha = 0;
 	this.scale = 1;
-    //Position des radial gradients
     this.gradientPosition = 0;
-    //hier ist Platz für mehr :D hinzufügen mit this.attributName = Wert;
-    // es ist dann abfragbar mit imgCon.attributName
+    this.isFadeOut = false;
 
-	var beatAnimRunning = false;
+    this.fadeOut = function(){
+        this.isFadeOut = true;
+    };
 
-    this.alpha = 1;          /// current alpha
-    this.delta = 0.1;        /// delta value = speed
+    this.fadeIn = function(){
+        this.isFadeOut = false;
+    };
 
-    //Is being called by animation loop
-	this.getAlpha = function(){
+    this.getIntroAlpha = function(){
+        if (this.isFadeOut){
+            if (this.introAlpha - FADE_DELTA > 0) {
+                this.introAlpha -= FADE_DELTA;
+            }
+            else {
+                this.introAlpha = 0;
+            }
+        }
+        else{
+            (this.introAlpha < 1) ?  this.introAlpha += 0.05 : this.introAlpha = 1;
+        }
+        return this.introAlpha;
+    };
 
-		if(beatAnimRunning){
-			/// increase alpha with delta value
-	        this.alpha += this.delta;
-	        
-	        //// if delta <=0 or >=1 then reverse
-	        if (this.alpha <= 0 || this.alpha >= 1) this.delta = -this.delta;
-	    	//set false if delta complete
-	    	if(this.alpha == 1) { beatAnimRunning = false; };
-    	}
-    	//Beat anim not running, return opaque
-    	else{ this.alpha = 1 };
-
-    	return this.alpha;
-	}
-
-
-
+    this.calcVisibleLines = function(value){
+        //console.log("Value"+value.toFixed(2));
+        this.visibleLines = Math.floor(value*14);
+        //console.log("integer:"+this.visibleLines);
+    };
 }

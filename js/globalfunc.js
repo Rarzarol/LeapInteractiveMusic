@@ -11,6 +11,9 @@ function parseLeapData(frame,hand){
 		palmPosY = hand.palmPosition[1];
 		palmPosZ = hand.palmPosition[2];
 
+        /*sphereRadius = hand.sphereRadius;
+        console.log(sphereRadius);*/
+
         smoothedX = smoothedX + ((palmPosX-smoothedX)/(samples/3));
         smoothedY = smoothedY + ((palmPosY-smoothedY)/(samples/3));
         smoothedZ = smoothedZ + ((palmPosZ-smoothedZ)/samples);
@@ -50,4 +53,12 @@ function parseLeapData(frame,hand){
 
 		var myPositions = [realX,realY,realZ];
 		return myPositions;
+}
+
+function changeSong(song){
+
+    if (currentSong != undefined){
+        song.stop(acontext.currentTime);
+    }
+    currentSong = song;
 }

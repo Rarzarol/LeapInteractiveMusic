@@ -22,8 +22,8 @@ function Mixer(items,parent){
 			//console.log("item id "+i+" has mixPosition: "+currentpos);
 			this.items[i].mixPosition = currentpos;
 			currentpos += this.distance;
-		};
-	}
+		}
+	};
 	
 	//This mixes Items depending on a value. 
 	//The function is called when Leap detects change on axis/we get a new frame.
@@ -75,8 +75,8 @@ function Mixer(items,parent){
 			//Turn both Items down, because hand is between two different Items
 			else {
 				//console.log("Dismiss aboveItem and belowItem because value is between two different ones");
-				this.lastBelowItem.fadeOut();
-				this.lastAboveItem.fadeOut();
+				this.lastBelowItem.fadeOut(0.2);
+				this.lastAboveItem.fadeOut(0.2);
 				this.lastBelowItem = this.belowItem;
 				this.lastAboveItem = this.aboveItem;
 			}
@@ -94,6 +94,6 @@ function Mixer(items,parent){
 		this.aboveItem.setVolume(acontext.currentTime,relvalue);
 		//console.log("setting belowItem to " + Number(1-relvalue).toFixed(1));
 		this.belowItem.setVolume(acontext.currentTime,1-relvalue);
-	}
+	};
 	this.placeItemsOnAxis();
 }
