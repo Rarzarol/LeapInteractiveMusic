@@ -20,8 +20,8 @@ var part1 = new SongPart([
     ["FXtest/test_fx_backing.wav"]
 ]);
 
-var part1FX = new Phaser();
-part1.createFXTrack("FXtest/test_fx_fxtrack.wav",part1FX,1);
+//var part1FX = new Phaser();
+//part1.createFXTrack("FXtest/test_fx_fxtrack.wav",part1FX,1);
 
 //Global Reverb
 var reverb = new Reverb("rev_saintsilvain.wav",0.1);

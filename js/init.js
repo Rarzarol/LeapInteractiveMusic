@@ -33,13 +33,27 @@ setInterval(function(){
         handInScene = true;
         timeOfHandNotRecognized = 0;
 		var hand = frame.hands[0];
-		parsedPosition = parseLeapData(frame,hand);
-		if (currentSong != undefined){ currentSong.mix(parsedPosition[0],parsedPosition[1],parsedPosition[2]); }
-		$.event.trigger({
-			type: "newposition",
-			message: "newposition",
-			time: new Date()
-		});
+		if (hand.palmPosition[1] > 750){
+            $.event.trigger({
+                type: "handtoohigh",
+                message: "handtoohigh",
+                time: new Date()
+            });
+        }
+        else{
+            parsedPosition = parseLeapData(frame,hand);
+            if (currentSong != undefined){ currentSong.mix(parsedPosition[0],parsedPosition[1],parsedPosition[2]); }
+            $.event.trigger({
+                type: "newposition",
+                message: "newposition",
+                time: new Date()
+            });
+            $.event.trigger({
+                type: "handinside",
+                message: "handinside",
+                time: new Date()
+            });
+        }
 	}
     else{
         //set flag: hands not recognized
@@ -47,6 +61,11 @@ setInterval(function(){
             timeOfHandNotRecognized = acontext.currentTime
         }
         handInScene = false;
+        $.event.trigger({
+            type: "handoutside",
+            message: "handoutside",
+            time: new Date()
+        });
     }
 },10); //20 safe
 });

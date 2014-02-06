@@ -19,13 +19,13 @@ function parseLeapData(frame,hand){
         smoothedZ = smoothedZ + ((palmPosZ-smoothedZ)/samples);
 
 		var realY = palmPosY; //smoothedY;
-		if (realY >= 40 && realY <= 500){
+		if (realY >= 40 && realY <= 600){
 			realY -= 40;
-			realY /= 500;
+			realY /= 600;
 		}
 		else if (realY < 40){ realY = 0;
         }
-        else if(realY > 500){ realY = 1;
+        else if(realY > 600){ realY = 1;
         }
 
 		var realX = palmPosX; //smoothedX;
@@ -49,8 +49,8 @@ function parseLeapData(frame,hand){
 
 		//console.log("realY:"+realY);
 
-		console.log("Original Leap Positions: "+palmPosX.toFixed(3)+"|"+palmPosY.toFixed(3)+"|"+palmPosZ.toFixed(3));
-		console.log("Parsed Leap Positions: "+realX.toFixed(3)+"|"+realY.toFixed(3)+"|"+realZ.toFixed(3));
+		//console.log("Original Leap Positions: "+palmPosX.toFixed(3)+"|"+palmPosY.toFixed(3)+"|"+palmPosZ.toFixed(3));
+		//console.log("Parsed Leap Positions: "+realX.toFixed(3)+"|"+realY.toFixed(3)+"|"+realZ.toFixed(3));
 
 		var myPositions = [realX,realY,realZ];
 		return myPositions;

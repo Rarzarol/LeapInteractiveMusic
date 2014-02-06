@@ -10,6 +10,7 @@ function Track(file,parent,maxVolume){
 	this.gainnode.gain.setValueAtTime(0,acontext.currentTime);
 	this.length;
 	this.source;
+    this.isStarted = false;
 
     this.buffer;
 
@@ -23,7 +24,10 @@ function Track(file,parent,maxVolume){
 	};
 
     this.stop = function(time){
-        this.source.stop(time);
+        if(this.isStarted){
+            this.source.stop(time)
+            this.isStarted = false;
+        }
     };
 
 	this.setVolume = function(time,value){
@@ -68,6 +72,7 @@ function Track(file,parent,maxVolume){
 	//Accessed externally
 	this.startTrack = function(time){
 		this.source.start(time);
+        this.isStarted = true;
 	};
 
 	this.loadAsSample(file);

@@ -6,6 +6,9 @@ function ImageController(){
 	this.scale = 1;
     this.gradientPosition = 0;
     this.isFadeOut = false;
+    this.showWarning = false;
+    this.darkenCanvas = false;
+    this.darkenAlpha = 0;
 
     this.fadeOut = function(){
         this.isFadeOut = true;
@@ -15,8 +18,24 @@ function ImageController(){
         this.isFadeOut = false;
     };
 
+    this.getBlacknessAlpha = function(){
+        if(this.darkenCanvas){
+            this.darkenAlpha < 0.8 ? this.darkenAlpha += 0.05 : this.darkenAlpha=0.8;
+        }
+        //!darkenCanvas
+        else{
+            if(this.darkenAlpha - FADE_DELTA > 0){
+                this.darkenAlpha -= FADE_DELTA;
+            }
+            else{
+                this.darkenAlpha = 0;
+            }
+        }
+        return this.darkenAlpha;
+    };
+
     this.getGradientPos = function(){
-        return this.gradientPosition
+        return this.gradientPosition;
     };
 
     this.getIntroAlpha = function(){

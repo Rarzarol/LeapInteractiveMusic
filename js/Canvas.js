@@ -1,14 +1,29 @@
 var canvas = document.getElementById('mycanvas');
 var context = canvas.getContext('2d');
 
+$(document).on("handoutside",function(){
+    imgCon.showWarning=true;
+    imgCon.darkenCanvas = true;
+});
+
+$(document).on("handtoohigh",function(){
+    imgCon.darkenCanvas = true;
+    imgCon.showWarning = true;
+});
+
+$(document).on("handinside",function(){
+    imgCon.showWarning=false;
+    imgCon.darkenCanvas = false;
+});
+
 var bgImage = new Image();
 bgImage.src = 'img/background.png';
 
 var instructions = new Image();
 instructions.src = "img/introtext2_sm.png";
 
-var mask = new Image();
-mask.src = "img/mask.png";
+var warning = new Image();
+warning.src = "img/warning.png";
 
 //Load overlay images
 var overlayImageArray = new Array();
@@ -74,16 +89,31 @@ function drawLoop() {
     context.drawImage(bgImage, -bgw/2, -bgh/2);
 
     var verticalLines = imgCon.visibleLines;
-    var overlay = overlayImageArray[verticalLines];
-    context.drawImage(overlay, -bgw/2, -bgh/2);
+    if(verticalLines != 0){
+        var overlay = overlayImageArray[verticalLines-1];
+        context.drawImage(overlay, -bgw/2, -bgh/2);
+    }
+
     drawGradient(bgw,bgh,1,300,imgCon.getGradientPos(),500);
 
     context.restore();
 
+    //darken canvas
+    context.fillStyle = '#000000';
+    context.globalAlpha = imgCon.getBlacknessAlpha();
+    context.fillRect(-bgw/2, -bgh/2, 2*bgw,2*bgh);
+
+    //draw instructions
     context.globalAlpha = imgCon.getIntroAlpha();
     context.drawImage(instructions,canvas.width/2-instructions.width/2,canvas.height/2-instructions.height/2);
 
-    printDebugMessages();
+    //draw warnings
+    context.globalAlpha = 1;
+    if(imgCon.showWarning && songStarted){
+        context.drawImage(warning,canvas.width/2-warning.width/2,canvas.height/2-warning.height/2);
+    }
+
+    //printDebugMessages();
     requestAnimationFrame(drawLoop);
 }
 
