@@ -33,7 +33,7 @@ setInterval(function(){
         handInScene = true;
         timeOfHandNotRecognized = 0;
 		var hand = frame.hands[0];
-		if (hand.palmPosition[1] > 750){
+		if (hand.palmPosition[1] > 750 || hand.palmPosition[0] <= -350 || hand.palmPosition[0] >= 350){
             $.event.trigger({
                 type: "handtoohigh",
                 message: "handtoohigh",

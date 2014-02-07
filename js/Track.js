@@ -25,12 +25,13 @@ function Track(file,parent,maxVolume){
 
     this.stop = function(time){
         if(this.isStarted){
-            this.source.stop(time)
+            this.source.stop(time);
             this.isStarted = false;
         }
     };
 
 	this.setVolume = function(time,value){
+        if(value > 1){console.log("value over 1"+value);}
         this.gainnode.gain.linearRampToValueAtTime(value*this.maxVolume,time+0.2);
 	};
 

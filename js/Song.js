@@ -14,7 +14,7 @@ function Song(songPartTreeArray,bpm){
 	this.start = function(){
 		//check if every file is loaded
 			//calculate positions for first part
-			this.startTime = acontext.currentTime+3;
+			this.startTime = acontext.currentTime+1;
 			this.songParts[0].startTime = this.startTime;
 			this.songParts[0].endTime = this.startTime+this.songParts[0].maxPartLength;
 			this.currentIndex = 0;
@@ -31,15 +31,9 @@ function Song(songPartTreeArray,bpm){
     };
 
     this.stop = function(time){
-        var currTime = acontext.currentTime;
-        var fadeTime = currTime+time;
-        var stopTime = fadeTime;
-        console.log("current time: "+currTime.toFixed(2));
-        console.log("FadeTime"+fadeTime.toFixed(2)+"StopTime"+stopTime.toFixed(2));
         this.songParts.forEach(function(songPart){
             //maybe add fade
-            songPart.fadeOut(fadeTime);
-            songPart.stop(stopTime);
+            songPart.stop(time);
             songStarted = false;
         })
     };

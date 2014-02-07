@@ -1,6 +1,6 @@
 var songStarted = false;
-var BUFFER_BETWEEN_PARTS = 0.8;
-var TIME_UNTIL_RESTART = 5;
+var BUFFER_BETWEEN_PARTS = 0.3;
+var TIME_UNTIL_RESTART = 20;
 var timeOfHandNotRecognized;
 var handsNotInFrameDiff;
 var paused = true;
@@ -57,7 +57,7 @@ function gameLoop(){
             //If last part has ended stop Song!
             if(isEnded){
                 console.log("ENDEEE GELÄNDE");
-                currentSong.stop();
+                currentSong.stop(acontext.currentTime+ BUFFER_BETWEEN_PARTS);
             }
         }
 		else{
@@ -75,5 +75,4 @@ function gameLoop(){
         console.log("restarting song");
     }
 }
-//TODO: 60!
-window.setInterval(gameLoop,1000/20); //60!!
+window.setInterval(gameLoop,1000/60);

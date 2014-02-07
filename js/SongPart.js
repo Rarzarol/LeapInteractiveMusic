@@ -13,19 +13,25 @@ function SongPart(partFileArray){
     this.FXTrack;
     this.effect;
 
+    this.gainnode = acontext.createGain();
+    this.gainnode.gain.setValueAtTime(1,acontext.currentTime);
+    this.gainnode.connect(masterGain);
+
+    this.zVolumeControl = false;
+
     this.addBackingTrack = function(track,volume){
         this.backingTrack = track;
-        this.backingTrack.gainnode.connect(premixBus);
+        this.backingTrack.gainnode.connect(masterGain);
         this.backingTrack.gainnode.gain.setValueAtTime(volume,acontext.currentTime);
     };
 
     this.changeFX = function(x,y,z){
        if(this.effect != undefined){
            if(this.effect instanceof Filter){
-               this.effect.changeFreqAtTime(x*7000,acontext.currentTime);
-               this.effect.changeQAtTime(z*5,acontext.currentTime);
-               this.effect.changeGainAtTime(y*10,acontext.currentTime);
-           }
+               this.effect.changeFreqAtTime(z*5000,acontext.currentTime);
+               //this.effect.changeQAtTime(x*5,acontext.currentTime);
+               //this.effect.changeGainAtTime(y*10,acontext.currentTime);
+           }    this.FXTrack.setVolume(acontext.currentTime,y);
            if(this.effect instanceof Reverb){
                fxbus.gain.setValueAtTime(z*2,acontext.currentTime);
            }
@@ -43,7 +49,9 @@ function SongPart(partFileArray){
     this.restart = function(){
         this.trackStacks.forEach(function(trackStack){
             trackStack.restart();
-        })
+        });
+        if(this.FXTrack != undefined){this.FXTrack.reloadBuffer();}
+        if(this.backingTrack != undefined){this.backingTrack.reloadBuffer();}
     };
 
     this.fadeOut = function(fadetime){
@@ -71,7 +79,7 @@ function SongPart(partFileArray){
 		var numberOfFiles = this.trackStacks.length  +
             (this.FXTrack      == undefined ? 0 : 1) +
             (this.backingTrack == undefined ? 0 : 1);
-        if(this.maxPartLength < length){ this.maxPartLength = length; };
+        if(this.maxPartLength < length){ this.maxPartLength = length; }
 		if (this.filecounter == numberOfFiles){
 			this.loaded = true;
 		}
@@ -80,14 +88,17 @@ function SongPart(partFileArray){
     this.stop = function(time){
         this.trackStacks.forEach(function(trackStack){
             trackStack.stop(time);
-        })
+        });
+        if(this.FXTrack != undefined){this.FXTrack.stop(time);}
+        if(this.backingTrack != undefined){this.backingTrack.stop(time);}
     };
 
 	this.startSongPart = function(time){
 		this.trackStacks.forEach(function(trackStack){
 			trackStack.startTrackStack(time);
 		});
-		if(this.backingTrack != undefined){ console.log("backingTrackStarted"); this.backingTrack.startTrack(time); }
+		if(this.backingTrack != undefined){
+            console.log("backingTrackStarted"); this.backingTrack.startTrack(time); }
         if(this.FXTrack != undefined)     { console.log("FXTrackStarted"); this.FXTrack.startTrack(time); }
 	};
 
@@ -99,6 +110,9 @@ function SongPart(partFileArray){
 		//STUB: Reverb mixing, still hardcoded
 		//fxBus.gain.setValueAtTime(z/3,acontext.currentTime);
 		//masterGain.gain.setValueAtTime(1-z,acontext.currentTime);
+        if(this.zVolumeControl){
+            this.gainnode.gain.setValueAtTime(z,acontext.currentTime);
+        }
 	};
 
 	//Constructor contd.

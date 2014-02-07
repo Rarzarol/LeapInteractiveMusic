@@ -89,11 +89,14 @@ function Mixer(items,parent){
 		var relvalue = (value - this.belowItem.mixPosition)*(this.items.length - 1);
 		//console.log("relative distance between 2 current Items: " + relvalue);
 
+        //Only set if relvalue+ 1-relvalue <=1;
+        if(relvalue + (1-relvalue) <=1){
 		//Set volume accordingly
 		//console.log("setting aboveItem to " + Number(relvalue).toFixed(1));
 		this.aboveItem.setVolume(acontext.currentTime,relvalue);
 		//console.log("setting belowItem to " + Number(1-relvalue).toFixed(1));
 		this.belowItem.setVolume(acontext.currentTime,1-relvalue);
+        }
 	};
 	this.placeItemsOnAxis();
 }

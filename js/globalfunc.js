@@ -28,13 +28,13 @@ function parseLeapData(frame,hand){
         else if(realY > 600){ realY = 1;
         }
 
-		var realX = palmPosX; //smoothedX;
-		realX += 400;
-		if (realX >= 0 && realX <= 800){
-			realX /= 800;
+		var realX = palmPosX; //smoothedX; //was 800
+		realX += 350;
+		if (realX >= 0 && realX <= 700){
+			realX /= 700;
 			//console.log("Pos X: "+realX);
 		}
-		else if(realX > 800) realX = 1;
+		else if(realX > 700) realX = 1;
 		else if(realX <= 0) realX = 0;
 
 		//-200 -> 300, 500
